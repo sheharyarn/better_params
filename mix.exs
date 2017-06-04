@@ -1,33 +1,59 @@
 defmodule SymbolizeParams.Mixfile do
   use Mix.Project
 
+  @app     :symbolize_params
+  @name    "SymbolizeParams"
+  @version "0.1.0"
+  @github  "https://github.com/sheharyarn/#{@app}"
+
+
   def project do
-    [app: :symbolize_params,
-     version: "0.1.0",
-     elixir: "~> 1.4",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps()]
+    [
+      # Project
+      app:          @app,
+      version:      @version,
+      elixir:       "~> 1.2",
+      description:  description(),
+      package:      package(),
+      deps:         deps(),
+
+      # ExDoc
+      name:         @name,
+      source_url:   @github,
+      homepage_url: @github,
+      docs: [
+        main:       @name,
+        canonical:  "https://hexdocs.pm/#{@app}",
+        extras:     ["README.md"]
+      ]
+    ]
   end
 
-  # Configuration for the OTP application
-  #
-  # Type "mix help compile.app" for more information
+
   def application do
-    # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger]]
+    [applications: []]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:my_dep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:my_dep, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
-  #
-  # Type "mix help deps" for more examples and options
+
   defp deps do
-    []
+    [
+      {:ex_doc, ">= 0.0.0", only: :dev },
+    ]
+  end
+
+
+  defp description do
+    "Cleaner Plug params for Elixir web applications"
+  end
+
+
+  defp package do
+    [
+      name: @app,
+      maintainers: ["Sheharyar Naseer"],
+      licenses: ["MIT"],
+      files: ~w(mix.exs lib README.md),
+      links: %{"Github" => @github}
+    ]
   end
 end
