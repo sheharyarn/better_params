@@ -1,6 +1,6 @@
-defmodule SymbolizeParamsTest do
+defmodule BetterParamsTest do
   use ExUnit.Case
-  doctest SymbolizeParams
+  doctest BetterParams
 
   test "the truth" do
     assert 1 + 1 == 2

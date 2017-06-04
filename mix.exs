@@ -1,8 +1,8 @@
-defmodule SymbolizeParams.Mixfile do
+defmodule BetterParams.Mixfile do
   use Mix.Project
 
-  @app     :symbolize_params
-  @name    "SymbolizeParams"
+  @app     :better_params
+  @name    "BetterParams"
   @version "0.1.0"
   @github  "https://github.com/sheharyarn/#{@app}"
 

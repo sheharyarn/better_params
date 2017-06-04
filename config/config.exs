@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :symbolize_params, key: :value
+#     config :better_params, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:symbolize_params, :key)
+#     Application.get_env(:better_params, :key)
 #
 # Or configure a 3rd-party app:
 #

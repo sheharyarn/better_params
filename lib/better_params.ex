@@ -1,6 +1,6 @@
-defmodule SymbolizeParams do
+defmodule BetterParams do
   @moduledoc """
-  Documentation for SymbolizeParams.
+  Documentation for BetterParams.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule SymbolizeParams do
 
   ## Examples
 
-      iex> SymbolizeParams.hello
+      iex> BetterParams.hello
       :world
 
   """
