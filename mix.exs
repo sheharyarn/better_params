@@ -37,7 +37,9 @@ defmodule BetterParams.Mixfile do
 
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: :dev },
+      {:plug,     ">= 1.0.0"             },
+      {:ex_utils, ">= 0.1.7"             },
+      {:ex_doc,   ">= 0.0.0", only: :dev },
     ]
   end
 
