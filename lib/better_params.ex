@@ -1,18 +1,9 @@
 defmodule BetterParams do
-  @moduledoc """
-  Documentation for BetterParams.
-  """
+  import Plug.Conn
 
-  @doc """
-  Hello world.
+  def init(opts), do: opts
 
-  ## Examples
-
-      iex> BetterParams.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def call(conn, _) do
+    conn
   end
 end
