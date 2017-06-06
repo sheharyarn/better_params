@@ -46,7 +46,7 @@ defmodule BetterParams.Mixfile do
 
 
   defp description do
-    "Cleaner Plug params for Elixir web applications"
+    "Cleaner Plug params for Elixir web applications 🙌"
   end
 
 
