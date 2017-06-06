@@ -41,13 +41,8 @@ def controller do
   quote do
     use Phoenix.Controller
 
-    alias MyApp.Repo
-    import Ecto
-    import Ecto.Query, only: [from: 1, from: 2, first: 1]
+    # Other stuff...
 
-    import MyApp.Router.Helpers
-
-    # Call the plug at the end
     plug BetterParams
   end
 end
@@ -55,6 +50,7 @@ end
 
 Alternatively, you can also call it your Router Pipelines or in
 individual controllers directly.
+
 
 
 ### Other Plug.Router Apps
@@ -75,6 +71,20 @@ end
 
 ```
 
+<br>
+
+
+
+
+## Roadmap
+
+ - [x] Write Tests
+ - [x] Write Documentation
+ - [x] Symbolize the collective `params` map
+ - [ ] Symbolize [individual parameter maps][plug-params] (if the need arises)
+    - [ ] `path_params`
+    - [ ] `body_params`
+    - [ ] `query_params`
 
 <br>
 
@@ -114,6 +124,7 @@ This package is available as open source under the terms of the [MIT License][li
   [license]:          https://opensource.org/licenses/MIT
   [hexpm]:            https://hex.pm/packages/better_params
   [plug]:             https://github.com/elixir-lang/plug
+  [plug-params]:      https://hexdocs.pm/plug/Plug.Conn.html#module-fetchable-fields
 
   [docs]:             https://hexdocs.pm/better_params
 
