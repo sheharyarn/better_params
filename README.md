@@ -18,6 +18,37 @@ instead of string keys in routers/controllers to calm my OCD down.
 
 
 
+## Usage
+
+Once installed, it lets you pattern match request parameters like
+`%{id: id}` instead of `%{"id" => id}` in Phoenix applications:
+
+```elixir
+# web/controllers/some_controller.ex
+
+def show(conn, %{id: id}) do
+  # do something
+end
+
+def create(conn, %{id: id, post: %{title: title, body: body}}) do
+  # do something
+end
+```
+
+When set up, it doesn't break your existing matches. You can continue to
+use String keys if you want. All request parameters are available for
+both String and Atom keys. This also doesn't pollute your Request Logs
+with duplicate params.
+
+For other `Plug.Router` based applications, you can also access request
+params similarly by calling them like `conn.params[:id]` or
+`conn.params.title`.
+
+<br>
+
+
+
+
 ## Installation
 
 Add `better_params` to your project dependencies in `mix.exs`:
