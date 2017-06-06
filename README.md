@@ -35,14 +35,14 @@ def create(conn, %{id: id, post: %{title: title, body: body}}) do
 end
 ```
 
-When set up, it doesn't break your existing matches. You can continue to
-use String keys if you want. All request parameters are available for
-both String and Atom keys. This also doesn't pollute your Request Logs
+You can continue to use String keys without breaking your existing
+matches if you want. All request parameters are available for both
+`String` and `Atom` keys. This also doesn't pollute your Request Logs
 with duplicate params.
 
 For other `Plug.Router` based applications, you can also access request
 params similarly by calling them like `conn.params[:id]` or
-`conn.params.title`.
+`conn.params.post.title`.
 
 <br>
 
