@@ -6,7 +6,7 @@
 [![Version][shield-version]][hexpm]
 [![License][shield-license]][hexpm]
 
-> Cleaner request parameters in Elixir web applications
+> Cleaner request parameters in Elixir web applications 🙌
 
 `BetterParams` is a simple Elixir [Plug][plug] that allows passed
 request parameters to be called as `atoms` instead of Strings. The
@@ -27,6 +27,54 @@ def deps do
   [{:better_params, "~> 0.1.0"}]
 end
 ```
+
+
+### Phoenix Framework
+
+For Phoenix applications, call the plug at the end of the `controller`
+method in `web/web.ex` (inside the `quote` block):
+
+```elixir
+# web/web.ex
+
+def controller do
+  quote do
+    use Phoenix.Controller
+
+    alias MyApp.Repo
+    import Ecto
+    import Ecto.Query, only: [from: 1, from: 2, first: 1]
+
+    import MyApp.Router.Helpers
+
+    # Call the plug at the end
+    plug BetterParams
+  end
+end
+```
+
+Alternatively, you can also call it your Router Pipelines or in
+individual controllers directly.
+
+
+### Other Plug.Router Apps
+
+For other applications using `Plug.Router`, call the Plug anytime after
+calling the `:match` and `:dispatch` plugs:
+
+```elixir
+defmodule MyApp.Router do
+  use Plug.Router
+
+  plug :match
+  plug :dispatch
+  plug BetterParams
+
+  # Rest of the router...
+end
+
+```
+
 
 <br>
 
