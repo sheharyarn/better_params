@@ -62,8 +62,32 @@ defmodule BetterParams do
   def symbolize_merge(map) when is_map(map) do
     map
     |> Map.delete(:__struct__)
-    |> ExUtils.Map.symbolize_keys(deep: true)
+    |> symbolize_keys
     |> Map.merge(map)
+  end
+
+
+  defp symbolize_keys(map) when is_map(map) do
+    Enum.reduce map, %{}, fn {k, v}, m ->
+      v = case is_map(v) do
+        true  -> symbolize_keys(v)
+        false -> v
+      end
+
+      map_put(m, k, v)
+    end
+  end
+
+
+  defp map_put(map, k, v) when is_map(map) do
+    try do
+      cond do
+        is_binary(k) -> Map.put(map, String.to_existing_atom(k), v)
+        true         -> Map.put(map, k, v)
+      end
+    rescue
+      ArgumentError -> map
+    end
   end
 
 end
