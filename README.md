@@ -39,8 +39,8 @@ end
 #### Notes
 
  - Implementation uses [`String.to_existing_atom`][string-atom] to prevent
-   against [DDoS attacks][gh-issue-ddos], so you can relax when using this
-   package.
+   against [DDoS attacks][gh-issue-ddos], so it only converts those params
+   to atoms that you use in your application.
  - You can continue to use String keys without breaking your existing
    matches if you want. All request parameters are available for both
    `String` and `Atom` keys (that have already been defined in the
