@@ -35,14 +35,20 @@ def create(conn, %{id: id, post: %{title: title, body: body}}) do
 end
 ```
 
-You can continue to use String keys without breaking your existing
-matches if you want. All request parameters are available for both
-`String` and `Atom` keys. This also doesn't pollute your Request Logs
-with duplicate params.
 
-For other `Plug.Router` based applications, you can also access request
-params similarly by calling them like `conn.params[:id]` or
-`conn.params.post.title`.
+#### Notes
+
+ - Implementation uses [`String.to_existing_atom`][string-atom] to prevent
+   against [DDoS attacks][gh-issue-ddos], so you can relax when using this
+   package.
+ - You can continue to use String keys without breaking your existing
+   matches if you want. All request parameters are available for both
+   `String` and `Atom` keys (that have already been defined in the
+   application).
+ - This doesn't pollute your Request Logs with duplicate params.
+ - For other `Plug.Router` based applications, you can also access request
+   params similarly by calling them like `conn.params[:id]` or
+  `conn.params.post.title`.
 
 <br>
 
@@ -55,7 +61,7 @@ Add `better_params` to your project dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:better_params, "~> 0.1.0"}]
+  [{:better_params, "~> 0.2.0"}]
 end
 ```
 
@@ -156,9 +162,11 @@ This package is available as open source under the terms of the [MIT License][li
   [hexpm]:            https://hex.pm/packages/better_params
   [plug]:             https://github.com/elixir-lang/plug
   [plug-params]:      https://hexdocs.pm/plug/Plug.Conn.html#module-fetchable-fields
+  [string-atom]:      https://hexdocs.pm/elixir/String.html#to_existing_atom/1
 
   [docs]:             https://hexdocs.pm/better_params
 
   [github-fork]:      https://github.com/sheharyarn/better_params/fork
+  [gh-issue-ddos]:    https://github.com/sheharyarn/better_params/issues/1
 
 
