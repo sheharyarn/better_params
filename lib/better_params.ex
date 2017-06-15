@@ -69,9 +69,10 @@ defmodule BetterParams do
 
   defp symbolize_keys(map) when is_map(map) do
     Enum.reduce map, %{}, fn {k, v}, m ->
-      v = case is_map(v) do
-        true  -> symbolize_keys(v)
-        false -> v
+      v = case v do
+        v when is_map(v)  -> symbolize_keys(v)
+        v when is_list(v) -> Enum.map(v, &symbolize_keys/1)
+        v -> v
       end
 
       map_put(m, k, v)
