@@ -66,7 +66,7 @@ defmodule BetterParams do
     |> Map.merge(map)
   end
 
-
+  defp symbolize_keys(list) when is_list(list), do: Enum.map(list, &symbolize_keys/1)
   defp symbolize_keys(map) when is_map(map) do
     Enum.reduce map, %{}, fn {k, v}, m ->
       v = case v do
