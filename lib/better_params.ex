@@ -16,6 +16,7 @@ defmodule BetterParams do
 
   This plug doesn't take any arguments.
   """
+  @spec init(term :: term) :: :ok
   def init(_) do
     :ok
   end
@@ -30,6 +31,7 @@ defmodule BetterParams do
   `symbolize_merge/1` method on the `Plug.Conn` params map, so
   they are available both with String and Atom keys.
   """
+  @spec call(conn :: Plug.Conn.t, :ok) :: Plug.Conn.t
   def call(%{params: params} = conn, :ok) do
     %{ conn | params: symbolize_merge(params) }
   end
@@ -59,6 +61,7 @@ defmodule BetterParams do
   map.b.d           # => 3
   ```
   """
+  @spec symbolize_merge(map :: map) :: map
   def symbolize_merge(map) when is_map(map) do
     map
     |> Map.delete(:__struct__)
