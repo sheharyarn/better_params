@@ -61,7 +61,7 @@ Add `better_params` to your project dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:better_params, "~> 0.2.0"}]
+  [{:better_params, "~> 0.3.0"}]
 end
 ```
 
