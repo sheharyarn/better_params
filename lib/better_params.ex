@@ -66,13 +66,23 @@ defmodule BetterParams do
     |> Map.merge(map)
   end
 
-  defp symbolize_keys(list) when is_list(list), do: Enum.map(list, &symbolize_keys/1)
+
+
+  ## Private Methods
+
+
   defp symbolize_keys(map) when is_map(map) do
-    Enum.reduce map, %{}, fn {k, v}, m ->
+    Enum.reduce(map, %{}, fn {k, v}, m ->
       map_put(m, k, symbolize_keys(v))
-    end
+    end)
   end
+
+  defp symbolize_keys(list) when is_list(list) do
+    Enum.map(list, &symbolize_keys/1)
+  end
+
   defp symbolize_keys(term), do: term
+
 
 
   defp map_put(map, k, v) when is_map(map) do
