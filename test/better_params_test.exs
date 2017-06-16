@@ -20,7 +20,19 @@ defmodule BetterParams.Tests do
     assert BetterParams.symbolize_merge(m_before) == m_after
   end
 
+  test "#symbolize_merge deep symbolizes lists of maps" do
+    m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3", "e" => [%{"f" => 4}, %{"g" => "5"}]}}
+    m_after  = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3", e: [%{f: 4}, %{g: "5"}]}})
 
+    assert BetterParams.symbolize_merge(m_before) == m_after
+  end
+
+  test "#symbolize_merge leaves non-map terms in lists untouched" do
+    m_before = %{"a" => [1, 2, %{"b" => 3}]}
+    m_after = Map.merge(m_before, %{a: [1, 2, %{b: 3}]})
+
+    assert BetterParams.symbolize_merge(m_before) == m_after
+  end
 
   @opts Router.init([])
   test "params map has both atom and string keys" do
