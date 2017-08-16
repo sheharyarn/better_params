@@ -3,6 +3,12 @@ defmodule BetterParams.Tests do
   use Plug.Test
 
   alias BetterParams.Tests.Meta.Router
+  alias BetterParams.Tests.Meta.Helpers
+
+
+
+  # Module Methods
+  # --------------
 
 
   describe "#symbolize_merge" do
@@ -36,26 +42,40 @@ defmodule BetterParams.Tests do
 
       assert BetterParams.symbolize_merge(m_before) == m_after
     end
+
+
+    test "it ignores structs" do
+      params = %{ file: Helpers.build_upload("some/file") }
+
+      assert BetterParams.symbolize_merge(params) == params
+    end
   end
 
 
 
-  @opts Router.init([])
-  test "params map has both atom and string keys" do
-    params =
-      :get
-      |> conn("/test/1/2/3")        # New Connection
-      |> Router.call(@opts)         # Invoke Router
-      |> Map.get(:params)           # Fetch Params
 
-    # Assert param values
-    assert params[:a]  == "1"
-    assert params[:b]  == "2"
-    assert params[:c]  == "3"
+  # Plug Behaviour
+  # --------------
 
-    assert params["a"] == "1"
-    assert params["b"] == "2"
-    assert params["c"] == "3"
+
+  describe "plug" do
+    @opts Router.init([])
+    test "params map has both atom and string keys" do
+      params =
+        :get
+        |> conn("/test/1/2/3")        # New Connection
+        |> Router.call(@opts)         # Invoke Router
+        |> Map.get(:params)           # Fetch Params
+
+      # Assert param values
+      assert params[:a]  == "1"
+      assert params[:b]  == "2"
+      assert params[:c]  == "3"
+
+      assert params["a"] == "1"
+      assert params["b"] == "2"
+      assert params["c"] == "3"
+    end
   end
 
 end
