@@ -1,5 +1,4 @@
 defmodule BetterParams do
-  import Plug.Conn
 
   @moduledoc """
   Implementation of the `BetterParams` plug and its core logic.
@@ -73,6 +72,10 @@ defmodule BetterParams do
 
   ## Private Methods
 
+
+  defp symbolize_keys(%{__struct__: _module} = struct) do
+    struct
+  end
 
   defp symbolize_keys(map) when is_map(map) do
     Enum.reduce(map, %{}, fn {k, v}, m ->
