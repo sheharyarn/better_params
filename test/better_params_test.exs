@@ -5,36 +5,39 @@ defmodule BetterParams.Tests do
   alias BetterParams.Tests.Meta.Router
 
 
-  test "#symbolize_merge symbolizes a map and merges it with itself" do
-    m_before = %{"a" => 1, "b" => 2, "c" => "3"}
-    m_after  = Map.merge(m_before, %{a: 1, b: 2, c: "3"})
+  describe "#symbolize_merge" do
+    test "it symbolizes a map and merges it with itself" do
+      m_before = %{"a" => 1, "b" => 2, "c" => "3"}
+      m_after  = Map.merge(m_before, %{a: 1, b: 2, c: "3"})
 
-    assert BetterParams.symbolize_merge(m_before) == m_after
+      assert BetterParams.symbolize_merge(m_before) == m_after
+    end
+
+
+    test "it deep symbolizes maps" do
+      m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3"}}
+      m_after  = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3"}})
+
+      assert BetterParams.symbolize_merge(m_before) == m_after
+    end
+
+
+    test "it deep symbolizes lists of maps" do
+      m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3", "e" => [%{"f" => 4}, %{"g" => "5"}]}}
+      m_after  = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3", e: [%{f: 4}, %{g: "5"}]}})
+
+      assert BetterParams.symbolize_merge(m_before) == m_after
+    end
+
+
+    test "it leaves non-map terms untouched" do
+      m_before = %{"a" => [1, 2, %{"b" => 3}]}
+      m_after = Map.merge(m_before, %{a: [1, 2, %{b: 3}]})
+
+      assert BetterParams.symbolize_merge(m_before) == m_after
+    end
   end
 
-
-  test "#symbolize_merge deep symbolizes maps" do
-    m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3"}}
-    m_after  = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3"}})
-
-    assert BetterParams.symbolize_merge(m_before) == m_after
-  end
-
-
-  test "#symbolize_merge deep symbolizes lists of maps" do
-    m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3", "e" => [%{"f" => 4}, %{"g" => "5"}]}}
-    m_after  = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3", e: [%{f: 4}, %{g: "5"}]}})
-
-    assert BetterParams.symbolize_merge(m_before) == m_after
-  end
-
-
-  test "#symbolize_merge leaves non-map terms untouched" do
-    m_before = %{"a" => [1, 2, %{"b" => 3}]}
-    m_after = Map.merge(m_before, %{a: [1, 2, %{b: 3}]})
-
-    assert BetterParams.symbolize_merge(m_before) == m_after
-  end
 
 
   @opts Router.init([])
