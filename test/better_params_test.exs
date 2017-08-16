@@ -59,7 +59,9 @@ defmodule BetterParams.Tests do
 
 
   describe "plug" do
-    @opts Router.init([])
+    @opts Router.init([])             # Router Initialization
+
+
     test "params map has both atom and string keys" do
       params =
         :get
@@ -75,6 +77,26 @@ defmodule BetterParams.Tests do
       assert params["a"] == "1"
       assert params["b"] == "2"
       assert params["c"] == "3"
+    end
+
+
+    test "works with file uploads" do
+      upload = Helpers.build_upload("another/file.png")
+
+      params =
+        :post
+        |> conn("/test/upload/something", %{data: upload})
+        |> Router.call(@opts)
+        |> Map.get(:params)
+
+
+      # Assert normal params
+      assert params[:id]    == "something"
+      assert params["id"]   == "something"
+
+      # Assert file upload
+      assert params[:data]  == upload
+      assert params["data"] == upload
     end
   end
 

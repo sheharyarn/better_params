@@ -21,6 +21,10 @@ defmodule BetterParams.Tests.Meta do
     get "/test/:a/:b/:c" do
       send_resp(conn, 200, "ok")
     end
+
+    post "/test/upload/:id" do
+      send_resp(conn, 200, "ok")
+    end
   end
 
 end
