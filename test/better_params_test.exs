@@ -3,6 +3,7 @@ defmodule BetterParams.Tests do
   use Plug.Test
 
   alias BetterParams.Tests.Meta.Router
+  alias BetterParams.Tests.Meta.AtomRouter
   alias BetterParams.Tests.Meta.Helpers
 
 
@@ -16,7 +17,7 @@ defmodule BetterParams.Tests do
       m_before = %{"a" => 1, "b" => 2, "c" => "3"}
       m_after  = Map.merge(m_before, %{a: 1, b: 2, c: "3"})
 
-      assert BetterParams.symbolize_merge(m_before) == m_after
+      assert BetterParams.symbolize_merge(m_before, false) == m_after
     end
 
 
@@ -24,7 +25,7 @@ defmodule BetterParams.Tests do
       m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3"}}
       m_after  = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3"}})
 
-      assert BetterParams.symbolize_merge(m_before) == m_after
+      assert BetterParams.symbolize_merge(m_before, false) == m_after
     end
 
 
@@ -32,7 +33,7 @@ defmodule BetterParams.Tests do
       m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3", "e" => [%{"f" => 4}, %{"g" => "5"}]}}
       m_after  = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3", e: [%{f: 4}, %{g: "5"}]}})
 
-      assert BetterParams.symbolize_merge(m_before) == m_after
+      assert BetterParams.symbolize_merge(m_before, false) == m_after
     end
 
 
@@ -40,14 +41,14 @@ defmodule BetterParams.Tests do
       m_before = %{"a" => [1, 2, %{"b" => 3}]}
       m_after = Map.merge(m_before, %{a: [1, 2, %{b: 3}]})
 
-      assert BetterParams.symbolize_merge(m_before) == m_after
+      assert BetterParams.symbolize_merge(m_before, false) == m_after
     end
 
 
     test "it ignores structs" do
       params = %{ file: Helpers.build_upload("some/file") }
 
-      assert BetterParams.symbolize_merge(params) == params
+      assert BetterParams.symbolize_merge(params, false) == params
     end
   end
 
@@ -60,6 +61,7 @@ defmodule BetterParams.Tests do
 
   describe "plug" do
     @opts Router.init([])             # Router Initialization
+    @atom_opts AtomRouter.init([])    # Router Initialization
 
 
     test "params map has both atom and string keys" do
@@ -77,6 +79,23 @@ defmodule BetterParams.Tests do
       assert params["a"] == "1"
       assert params["b"] == "2"
       assert params["c"] == "3"
+    end
+
+    test "params map has only atom keys when drop_string_keys is true" do
+      params =
+        :get
+        |> conn("/test/1/2/3")          # New Connection
+        |> AtomRouter.call(@atom_opts)  # Invoke Router
+        |> Map.get(:params)             # Fetch Params
+
+      # Assert param values
+      assert params[:a]  == "1"
+      assert params[:b]  == "2"
+      assert params[:c]  == "3"
+
+      refute params["a"]
+      refute params["b"]
+      refute params["c"]
     end
 
 

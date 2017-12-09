@@ -13,11 +13,12 @@ defmodule BetterParams do
   @doc """
   Initializes the Plug.
 
-  This plug doesn't take any arguments.
+
   """
-  @spec init(term :: term) :: :ok
-  def init(_) do
-    :ok
+  @spec init(term :: term) :: {boolean}
+  def init(opts) do
+    drop_string_keys = Keyword.get(opts, :drop_string_keys, false)
+    {drop_string_keys}
   end
 
 
@@ -27,12 +28,12 @@ defmodule BetterParams do
   Implementation of the Plug
 
   This implements the `call` callback of the Plug. It calls the
-  `symbolize_merge/1` method on the `Plug.Conn` params map, so
+  `symbolize_merge/2` method on the `Plug.Conn` params map, so
   they are available both with String and Atom keys.
   """
-  @spec call(conn :: Plug.Conn.t, :ok) :: Plug.Conn.t
-  def call(%{params: params} = conn, :ok) do
-    %{ conn | params: symbolize_merge(params) }
+  @spec call(conn :: Plug.Conn.t, opts :: {boolean}) :: Plug.Conn.t
+  def call(%{params: params} = conn, {drop_string_keys}) do
+    %{ conn | params: symbolize_merge(params, drop_string_keys) }
   end
 
 
@@ -42,7 +43,8 @@ defmodule BetterParams do
   Core logic of the Plug
 
   Takes a Map with String keys and returns a new map with
-  all values accessible by both String and Atom keys.
+  all values accessible by both String and Atom keys, or,
+  if the second parameter is `true`, by Atom keys only.
 
   If the map is nested, it symbolizes all sub-maps
   as well.
@@ -52,20 +54,28 @@ defmodule BetterParams do
   ```
   map = %{"a" => 1, "b" => %{"c" => 2, "d" => 3}}
 
-  map = BetterParams.symbolize_merge(map)
+  string_map = BetterParams.symbolize_merge(map, false)
   # => %{:a => 1, :b => %{c: 2, d: 3}, "a" => 1, "b" => %{"c" => 2, "d" => 3}}
 
-  map[:a]           # => 1
-  map[:b][:c]       # => 2
-  map.b.d           # => 3
+  atom_map = BetterParams.symbolize_merge(map, true)
+  # => %{:a => 1, :b => %{c: 2, d: 3}}
+
+  string_map[:a]           # => 1
+  string_map[:b][:c]       # => 2
+  string_map.b.d           # => 3
   ```
   """
-  @spec symbolize_merge(map :: map) :: map
-  def symbolize_merge(map) when is_map(map) do
-    map
-    |> Map.delete(:__struct__)
-    |> symbolize_keys
-    |> Map.merge(map)
+  @spec symbolize_merge(map :: map, drop_string_keys :: boolean) :: map
+  def symbolize_merge(map, drop_string_keys) when is_map(map) do
+    atom_map = map
+              |> Map.delete(:__struct__)
+              |> symbolize_keys
+
+    if drop_string_keys do
+      atom_map
+    else
+      Map.merge(map, atom_map)
+    end
   end
 
 
