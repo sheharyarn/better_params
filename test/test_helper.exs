@@ -33,8 +33,7 @@ defmodule BetterParams.Tests.Meta do
 
     plug :match
     plug :dispatch
-    plug BetterParams,
-      drop_string_keys: true
+    plug BetterParams, drop_string_keys: true
 
     get "/test/:a/:b/:c" do
       send_resp(conn, 200, "ok")

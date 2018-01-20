@@ -15,10 +15,9 @@ defmodule BetterParams do
 
 
   """
-  @spec init(term :: term) :: {boolean}
+  @spec init(opts :: Keyword.t) :: Keyword.t
   def init(opts) do
-    drop_string_keys = Keyword.get(opts, :drop_string_keys, false)
-    {drop_string_keys}
+    opts
   end
 
 
@@ -31,9 +30,9 @@ defmodule BetterParams do
   `symbolize_merge/2` method on the `Plug.Conn` params map, so
   they are available both with String and Atom keys.
   """
-  @spec call(conn :: Plug.Conn.t, opts :: {boolean}) :: Plug.Conn.t
-  def call(%{params: params} = conn, {drop_string_keys}) do
-    %{ conn | params: symbolize_merge(params, drop_string_keys) }
+  @spec call(conn :: Plug.Conn.t, opts :: Keyword.t) :: Plug.Conn.t
+  def call(%{params: params} = conn, opts) do
+    %{ conn | params: symbolize_merge(params, opts) }
   end
 
 
@@ -65,13 +64,14 @@ defmodule BetterParams do
   string_map.b.d           # => 3
   ```
   """
-  @spec symbolize_merge(map :: map, drop_string_keys :: boolean) :: map
-  def symbolize_merge(map, drop_string_keys) when is_map(map) do
-    atom_map = map
-              |> Map.delete(:__struct__)
-              |> symbolize_keys
+  @spec symbolize_merge(map :: map, opts :: Keyword.t) :: map
+  def symbolize_merge(map, opts) when is_map(map) do
+    atom_map =
+      map
+      |> Map.delete(:__struct__)
+      |> symbolize_keys
 
-    if drop_string_keys do
+    if Keyword.get(opts, :drop_string_keys, false) do
       atom_map
     else
       Map.merge(map, atom_map)
