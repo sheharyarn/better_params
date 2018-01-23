@@ -3,7 +3,7 @@ defmodule BetterParams.Mixfile do
 
   @app     :better_params
   @name    "BetterParams"
-  @version "0.4.0"
+  @version "0.5.0"
   @github  "https://github.com/sheharyarn/#{@app}"
 
 
