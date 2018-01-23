@@ -108,6 +108,26 @@ end
 
 ```
 
+
+
+### Removing String Keys Entirely
+
+If your use case calls for a params object with _only_ `Atom` keys, you may pass the option `drop_string_keys` to the plug. Much as it says on the can, this will replace the `String`-type keys altogether, rather than preserving them alongside the `Atom` keys.
+
+```elixir
+defmodule MyApp.Router do
+  use Plug.Router
+
+  plug :match
+  plug :dispatch
+  plug BetterParams,
+    drop_string_keys: true
+
+  # Rest of the router...
+end
+
+```
+
 <br>
 
 
@@ -168,5 +188,3 @@ This package is available as open source under the terms of the [MIT License][li
 
   [github-fork]:      https://github.com/sheharyarn/better_params/fork
   [gh-issue-ddos]:    https://github.com/sheharyarn/better_params/issues/1
-
-
