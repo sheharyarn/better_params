@@ -39,7 +39,7 @@ end
 #### Notes
 
  - Implementation uses [`String.to_existing_atom`][string-atom] to prevent
-   against [DDoS attacks][gh-issue-ddos], so it only converts those params
+   against [DoS attacks][gh-issue-ddos], so it only converts those params
    to atoms that you use in your application.
  - You can continue to use String keys without breaking your existing
    matches if you want. All request parameters are available for both
@@ -64,6 +64,7 @@ def deps do
   [{:better_params, "~> 0.5.0"}]
 end
 ```
+
 
 
 ### Phoenix Framework
@@ -112,20 +113,13 @@ end
 
 ### Removing String Keys Entirely
 
-If your use case calls for a params object with _only_ `Atom` keys, you may pass the option `drop_string_keys` to the plug. Much as it says on the can, this will replace the `String`-type keys altogether, rather than preserving them alongside the `Atom` keys.
+If your use case calls for a params object with _only_ `Atom` keys, you
+may pass the option `drop_string_keys` to the plug. Much as it says on
+the can, this will replace the `String`-type keys altogether, rather
+than preserving them alongside the `Atom` keys.
 
 ```elixir
-defmodule MyApp.Router do
-  use Plug.Router
-
-  plug :match
-  plug :dispatch
-  plug BetterParams,
-    drop_string_keys: true
-
-  # Rest of the router...
-end
-
+plug BetterParams, drop_string_keys: true
 ```
 
 <br>
@@ -138,6 +132,7 @@ end
  - [x] Write Tests
  - [x] Write Documentation
  - [x] Symbolize the collective `params` map
+ - [x] Option to remove string keys entirely
  - [ ] Symbolize [individual parameter maps][plug-params] (if the need arises)
     - [ ] `path_params`
     - [ ] `body_params`
