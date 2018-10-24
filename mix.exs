@@ -7,6 +7,15 @@ defmodule BetterParams.Mixfile do
   @github  "https://github.com/sheharyarn/#{@app}"
 
 
+  # NOTE:
+  # To publish package or update docs, use the `docs`
+  # mix environment to not include support modules
+  # that are normally included in the `dev` environment
+  #
+  #   MIX_ENV=docs hex.publish
+  #
+
+
   def project do
     [
       # Project
@@ -38,7 +47,7 @@ defmodule BetterParams.Mixfile do
   defp deps do
     [
       {:plug,     ">= 1.0.0"              },
-      {:ex_doc,   ">= 0.0.0", only: :dev  },
+      {:ex_doc,   ">= 0.0.0", only: :docs },
       {:inch_ex,  ">= 0.0.0", only: :docs },
     ]
   end
