@@ -1,4 +1,5 @@
 defmodule BetterParams do
+  @behaviour Plug
 
   @moduledoc """
   Implementation of the `BetterParams` plug and its core logic.
@@ -12,10 +13,8 @@ defmodule BetterParams do
 
   @doc """
   Initializes the Plug.
-
-
   """
-  @spec init(opts :: Keyword.t) :: Keyword.t
+  @impl Plug
   def init(opts) do
     opts
   end
@@ -30,7 +29,7 @@ defmodule BetterParams do
   `symbolize_merge/2` method on the `Plug.Conn` params map, so
   they are available both with String and Atom keys.
   """
-  @spec call(conn :: Plug.Conn.t, opts :: Keyword.t) :: Plug.Conn.t
+  @impl Plug
   def call(%{params: params} = conn, opts) do
     %{ conn | params: symbolize_merge(params, opts) }
   end
@@ -39,33 +38,35 @@ defmodule BetterParams do
 
 
   @doc """
-  Core logic of the Plug
+  Converts String keys of a Map to Atoms
 
-  Takes a Map with String keys and returns a new map with
-  all values accessible by both String and Atom keys, or,
-  if the second parameter is `true`, by Atom keys only.
+  Takes a Map with String keys and an optional keyword list
+  of options. Returns a new map with all values accessible
+  by both String and Atom keys. If the map is nested, it
+  symbolizes all sub-maps as well.
 
-  If the map is nested, it symbolizes all sub-maps
-  as well.
+  The only option supported at this time is `drop_string_keys`
+  which defaults to `false`. When set `true`, it will
+  return a new map with only Atom version of the keys.
 
   ## Example
 
   ```
   map = %{"a" => 1, "b" => %{"c" => 2, "d" => 3}}
 
-  string_map = BetterParams.symbolize_merge(map, false)
+  mixed_map = BetterParams.symbolize_merge(map)
   # => %{:a => 1, :b => %{c: 2, d: 3}, "a" => 1, "b" => %{"c" => 2, "d" => 3}}
 
-  atom_map = BetterParams.symbolize_merge(map, true)
-  # => %{:a => 1, :b => %{c: 2, d: 3}}
+  atom_map = BetterParams.symbolize_merge(map, drop_string_keys: true)
+  # => %{a: 1, b: %{c: 2, d: 3}}
 
-  string_map[:a]           # => 1
-  string_map[:b][:c]       # => 2
-  string_map.b.d           # => 3
+  mixed_map[:a]           # => 1
+  mixed_map[:b][:c]       # => 2
+  mixed_map.b.d           # => 3
   ```
   """
   @spec symbolize_merge(map :: map, opts :: Keyword.t) :: map
-  def symbolize_merge(map, opts) when is_map(map) do
+  def symbolize_merge(map, opts \\ []) when is_map(map) do
     atom_map =
       map
       |> Map.delete(:__struct__)
@@ -102,14 +103,12 @@ defmodule BetterParams do
 
 
   defp map_put(map, k, v) when is_map(map) do
-    try do
-      cond do
-        is_binary(k) -> Map.put(map, String.to_existing_atom(k), v)
-        true         -> Map.put(map, k, v)
-      end
-    rescue
-      ArgumentError -> map
+    cond do
+      is_binary(k) -> Map.put(map, String.to_existing_atom(k), v)
+      true         -> Map.put(map, k, v)
     end
+  rescue
+    ArgumentError -> map
   end
 
 end
