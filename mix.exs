@@ -1,4 +1,4 @@
-defmodule BetterParams.Mixfile do
+defmodule BetterParams.MixProject do
   use Mix.Project
 
   @app :better_params
