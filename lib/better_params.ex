@@ -8,9 +8,6 @@ defmodule BetterParams do
   installation and usage instructions.
   """
 
-
-
-
   @doc """
   Initializes the Plug.
   """
@@ -18,9 +15,6 @@ defmodule BetterParams do
   def init(opts) do
     opts
   end
-
-
-
 
   @doc """
   Implementation of the Plug
@@ -31,11 +25,8 @@ defmodule BetterParams do
   """
   @impl Plug
   def call(%{params: params} = conn, opts) do
-    %{ conn | params: symbolize_merge(params, opts) }
+    %{conn | params: symbolize_merge(params, opts)}
   end
-
-
-
 
   @doc """
   Converts String keys of a Map to Atoms
@@ -65,7 +56,7 @@ defmodule BetterParams do
   mixed_map.b.d           # => 3
   ```
   """
-  @spec symbolize_merge(map :: map, opts :: Keyword.t) :: map
+  @spec symbolize_merge(map :: map, opts :: Keyword.t()) :: map
   def symbolize_merge(map, opts \\ []) when is_map(map) do
     atom_map =
       map
@@ -79,10 +70,7 @@ defmodule BetterParams do
     end
   end
 
-
-
   ## Private Methods
-
 
   defp symbolize_keys(%{__struct__: _module} = struct) do
     struct
@@ -100,15 +88,12 @@ defmodule BetterParams do
 
   defp symbolize_keys(term), do: term
 
-
-
   defp map_put(map, k, v) when is_map(map) do
     cond do
       is_binary(k) -> Map.put(map, String.to_existing_atom(k), v)
-      true         -> Map.put(map, k, v)
+      true -> Map.put(map, k, v)
     end
   rescue
     ArgumentError -> map
   end
-
 end
