@@ -1,6 +1,4 @@
 defmodule BetterParams do
-  @behaviour Plug
-
   @moduledoc """
   Implementation of the `BetterParams` plug and its core logic.
 
@@ -8,10 +6,13 @@ defmodule BetterParams do
   installation and usage instructions.
   """
 
+  @behaviour Plug
+
+
   @doc """
   Initializes the Plug.
   """
-  @impl Plug
+  @impl true
   def init(opts) do
     opts
   end
@@ -23,7 +24,7 @@ defmodule BetterParams do
   `symbolize_merge/2` method on the `Plug.Conn` params map, so
   they are available both with String and Atom keys.
   """
-  @impl Plug
+  @impl true
   def call(%{params: params} = conn, opts) do
     %{conn | params: symbolize_merge(params, opts)}
   end
