@@ -1,6 +1,6 @@
 defmodule BetterParams.Tests do
   use ExUnit.Case
-  use Plug.Test
+  import Plug.Test
 
   alias BetterParams.Tests.Meta.Router
   alias BetterParams.Tests.Meta.AtomRouter
@@ -51,17 +51,13 @@ defmodule BetterParams.Tests do
   describe "plug" do
     # Router Initialization
     @opts Router.init([])
-    # Router Initialization
     @atom_opts AtomRouter.init([])
 
     test "params map has both atom and string keys" do
       params =
         :get
-        # New Connection
         |> conn("/test/1/2/3")
-        # Invoke Router
         |> Router.call(@opts)
-        # Fetch Params
         |> Map.get(:params)
 
       # Assert param values
@@ -77,11 +73,8 @@ defmodule BetterParams.Tests do
     test "params map has only atom keys when drop_string_keys is true" do
       params =
         :get
-        # New Connection
         |> conn("/test/1/2/3")
-        # Invoke Router
         |> AtomRouter.call(@atom_opts)
-        # Fetch Params
         |> Map.get(:params)
 
       # Assert param values
