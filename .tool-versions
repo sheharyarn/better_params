@@ -1,1 +1,2 @@
-elixir 1.6.5
+elixir 1.19.2-otp-28
+erlang 28.5
