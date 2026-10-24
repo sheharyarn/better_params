@@ -127,22 +127,6 @@ plug BetterParams, drop_string_keys: true
 
 
 
-## Roadmap
-
- - [x] Write Tests
- - [x] Write Documentation
- - [x] Symbolize the collective `params` map
- - [x] Option to remove string keys entirely
- - [ ] Symbolize [individual parameter maps][plug-params] (if the need arises)
-    - [ ] `path_params`
-    - [ ] `body_params`
-    - [ ] `query_params`
-
-<br>
-
-
-
-
 ## Contributing
 
  - [Fork][github-fork], Enhance, Send PR
@@ -164,22 +148,22 @@ This package is available as open source under the terms of the [MIT License][li
 
 
 
-  [shield-version]:   https://img.shields.io/hexpm/v/better_params.svg
-  [shield-license]:   https://img.shields.io/hexpm/l/better_params.svg
-  [shield-downloads]: https://img.shields.io/hexpm/dt/better_params.svg
-  [shield-travis]:    https://img.shields.io/travis/sheharyarn/better_params/master.svg
-  [shield-inch]:      https://inch-ci.org/github/sheharyarn/better_params.svg?branch=master
+[shield-version]:   https://img.shields.io/hexpm/v/better_params.svg
+[shield-license]:   https://img.shields.io/hexpm/l/better_params.svg
+[shield-downloads]: https://img.shields.io/hexpm/dt/better_params.svg
+[shield-travis]:    https://img.shields.io/travis/sheharyarn/better_params/master.svg
+[shield-inch]:      https://inch-ci.org/github/sheharyarn/better_params.svg?branch=master
 
-  [travis-ci]:        https://travis-ci.org/sheharyarn/better_params
-  [inch-ci]:          https://inch-ci.org/github/sheharyarn/better_params
+[travis-ci]:        https://travis-ci.org/sheharyarn/better_params
+[inch-ci]:          https://inch-ci.org/github/sheharyarn/better_params
 
-  [license]:          https://opensource.org/licenses/MIT
-  [hexpm]:            https://hex.pm/packages/better_params
-  [plug]:             https://github.com/elixir-lang/plug
-  [plug-params]:      https://hexdocs.pm/plug/Plug.Conn.html#module-fetchable-fields
-  [string-atom]:      https://hexdocs.pm/elixir/String.html#to_existing_atom/1
+[license]:          https://opensource.org/licenses/MIT
+[hexpm]:            https://hex.pm/packages/better_params
+[plug]:             https://github.com/elixir-lang/plug
+[plug-params]:      https://hexdocs.pm/plug/Plug.Conn.html#module-fetchable-fields
+[string-atom]:      https://hexdocs.pm/elixir/String.html#to_existing_atom/1
 
-  [docs]:             https://hexdocs.pm/better_params
+[docs]:             https://hexdocs.pm/better_params
 
-  [github-fork]:      https://github.com/sheharyarn/better_params/fork
-  [gh-issue-ddos]:    https://github.com/sheharyarn/better_params/issues/1
+[github-fork]:      https://github.com/sheharyarn/better_params/fork
+[gh-issue-ddos]:    https://github.com/sheharyarn/better_params/issues/1
