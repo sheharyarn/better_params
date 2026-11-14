@@ -58,7 +58,7 @@ defmodule BetterParams.MixProject do
       maintainers: ["Sheharyar Naseer"],
       licenses: ["MIT"],
       files: ~w(mix.exs lib README.md),
-      links: %{"Github" => @github}
+      links: %{"GitHub" => @github}
     ]
   end
 end
