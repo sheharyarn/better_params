@@ -31,7 +31,7 @@ defmodule BetterParams.MixProject do
       docs: [
         main: @name,
         canonical: "https://hexdocs.pm/#{@app}",
-        extras: ["README.md"]
+        extras: ["README.md", "CHANGELOG.md"]
       ]
     ]
   end
@@ -57,7 +57,7 @@ defmodule BetterParams.MixProject do
       name: @app,
       maintainers: ["Sheharyar Naseer"],
       licenses: ["MIT"],
-      files: ~w(mix.exs lib README.md),
+      files: ~w(mix.exs lib README.md CHANGELOG.md),
       links: %{"GitHub" => @github}
     ]
   end
