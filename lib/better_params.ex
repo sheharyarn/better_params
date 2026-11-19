@@ -8,7 +8,6 @@ defmodule BetterParams do
 
   @behaviour Plug
 
-
   @doc """
   Initializes the Plug.
   """
@@ -69,6 +68,15 @@ defmodule BetterParams do
     else
       Map.merge(map, atom_map)
     end
+  end
+
+  @doc """
+  Deprecated alias for `atomize_merge/2`.
+  """
+  @deprecated "Use atomize_merge/2 instead"
+  @spec symbolize_merge(map :: map, opts :: Keyword.t()) :: map
+  def symbolize_merge(map, opts \\ []) when is_map(map) do
+    atomize_merge(map, opts)
   end
 
   ## Private Methods

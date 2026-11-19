@@ -45,6 +45,18 @@ defmodule BetterParams.Tests do
     end
   end
 
+  describe ".symbolize_merge/2" do
+    test "delegates to atomize_merge/2 for backwards compatibility" do
+      params = %{"a" => 1}
+
+      assert apply(BetterParams, :symbolize_merge, [params]) ==
+               BetterParams.atomize_merge(params)
+
+      assert apply(BetterParams, :symbolize_merge, [params, [drop_string_keys: true]]) ==
+               BetterParams.atomize_merge(params, drop_string_keys: true)
+    end
+  end
+
   # Plug Behaviour
   # --------------
 
