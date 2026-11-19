@@ -12,9 +12,7 @@ defmodule BetterParams do
   Initializes the Plug.
   """
   @impl true
-  def init(opts) do
-    opts
-  end
+  def init(opts), do: opts
 
   @doc """
   Implementation of the Plug
@@ -56,7 +54,7 @@ defmodule BetterParams do
   mixed_map.b.d           # => 3
   ```
   """
-  @spec atomize_merge(map :: map, opts :: Keyword.t()) :: map
+  @spec atomize_merge(map(), Keyword.t()) :: map()
   def atomize_merge(map, opts \\ []) when is_map(map) do
     atom_map =
       map
@@ -74,7 +72,7 @@ defmodule BetterParams do
   Deprecated alias for `atomize_merge/2`.
   """
   @deprecated "Use atomize_merge/2 instead"
-  @spec symbolize_merge(map :: map, opts :: Keyword.t()) :: map
+  @spec symbolize_merge(map(), Keyword.t()) :: map()
   def symbolize_merge(map, opts \\ []) when is_map(map) do
     atomize_merge(map, opts)
   end
