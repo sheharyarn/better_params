@@ -3,7 +3,7 @@ defmodule BetterParams.MixProject do
 
   @app :better_params
   @name "BetterParams"
-  @version "0.5.0"
+  @version "1.0.0"
   @github "https://github.com/sheharyarn/#{@app}"
 
   # NOTE:
@@ -11,7 +11,7 @@ defmodule BetterParams.MixProject do
   # mix environment to not include support modules
   # that are normally included in the `dev` environment
   #
-  #   MIX_ENV=docs hex.publish
+  #   MIX_ENV=docs mix hex.publish
   #
 
   def project do
