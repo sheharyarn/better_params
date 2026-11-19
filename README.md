@@ -3,6 +3,7 @@
 
 [![Build Status][shield-github]][github-ci]
 [![Coverage Status][shield-inch]][docs]
+[![Downloads][shield-downloads]][hexpm]
 [![Version][shield-version]][hexpm]
 [![License][shield-license]][hexpm]
 
