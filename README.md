@@ -1,7 +1,7 @@
 [BetterParams][docs]
 ====================
 
-[![Build Status][shield-travis]][travis-ci]
+[![Build Status][shield-github]][github-ci]
 [![Coverage Status][shield-inch]][docs]
 [![Version][shield-version]][hexpm]
 [![License][shield-license]][hexpm]
@@ -151,10 +151,10 @@ This package is available as open source under the terms of the [MIT License][li
 [shield-version]:   https://img.shields.io/hexpm/v/better_params.svg
 [shield-license]:   https://img.shields.io/hexpm/l/better_params.svg
 [shield-downloads]: https://img.shields.io/hexpm/dt/better_params.svg
-[shield-travis]:    https://img.shields.io/travis/sheharyarn/better_params/master.svg
+[shield-github]:    https://github.com/sheharyarn/better_params/actions/workflows/ci.yml/badge.svg
 [shield-inch]:      https://inch-ci.org/github/sheharyarn/better_params.svg?branch=master
 
-[travis-ci]:        https://travis-ci.org/sheharyarn/better_params
+[github-ci]:        https://github.com/sheharyarn/better_params/actions/workflows/ci.yml
 [inch-ci]:          https://inch-ci.org/github/sheharyarn/better_params
 
 [license]:          https://opensource.org/licenses/MIT
