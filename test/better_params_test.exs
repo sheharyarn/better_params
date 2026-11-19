@@ -9,39 +9,39 @@ defmodule BetterParams.Tests do
   # Module Methods
   # --------------
 
-  describe "#symbolize_merge" do
-    test "it symbolizes a map and merges it with itself" do
+  describe ".atomize_merge/2" do
+    test "it atomizes a map and merges it with itself" do
       m_before = %{"a" => 1, "b" => 2, "c" => "3"}
       m_after = Map.merge(m_before, %{a: 1, b: 2, c: "3"})
 
-      assert BetterParams.symbolize_merge(m_before, []) == m_after
+      assert BetterParams.atomize_merge(m_before, []) == m_after
     end
 
-    test "it deep symbolizes maps" do
+    test "it deep atomizes maps" do
       m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3"}}
       m_after = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3"}})
 
-      assert BetterParams.symbolize_merge(m_before, []) == m_after
+      assert BetterParams.atomize_merge(m_before, []) == m_after
     end
 
-    test "it deep symbolizes lists of maps" do
+    test "it deep atomizes lists of maps" do
       m_before = %{"a" => 1, "b" => %{"c" => 2, "d" => "3", "e" => [%{"f" => 4}, %{"g" => "5"}]}}
       m_after = Map.merge(m_before, %{a: 1, b: %{c: 2, d: "3", e: [%{f: 4}, %{g: "5"}]}})
 
-      assert BetterParams.symbolize_merge(m_before, []) == m_after
+      assert BetterParams.atomize_merge(m_before, []) == m_after
     end
 
     test "it leaves non-map terms untouched" do
       m_before = %{"a" => [1, 2, %{"b" => 3}]}
       m_after = Map.merge(m_before, %{a: [1, 2, %{b: 3}]})
 
-      assert BetterParams.symbolize_merge(m_before, []) == m_after
+      assert BetterParams.atomize_merge(m_before, []) == m_after
     end
 
     test "it ignores structs" do
       params = %{file: Helpers.build_upload("some/file")}
 
-      assert BetterParams.symbolize_merge(params, []) == params
+      assert BetterParams.atomize_merge(params, []) == params
     end
   end
 
