@@ -29,7 +29,7 @@ defmodule BetterParams.MixProject do
       source_url: @github,
       homepage_url: @github,
       docs: [
-        main: @name,
+        main: "readme",
         canonical: "https://hexdocs.pm/#{@app}",
         extras: ["README.md", "CHANGELOG.md"]
       ]
