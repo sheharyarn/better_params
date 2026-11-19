@@ -9,13 +9,11 @@ on:
 jobs:
   test:
     name: Build and test
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         include:
-          - elixir: '1.14'
-            otp: '24.3'
           - elixir: '1.16'
             otp: '26.0'
           - elixir: '1.18'
